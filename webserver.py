@@ -7,9 +7,25 @@ serverSocket = socket(AF_INET, SOCK_STREAM)
 # Fill in start
 # -------------
 
-  # TODO: Assign a port number
-  #       Bind the socket to server address and server port
-  #       Tell the socket to listen to at most 1 connection at a time
+# Task: Assign a port number
+#       Bind the socket to server address and server port
+#       Tell the socket to listen to at most 1 connection at a time
+
+# Assign a port number
+# TODO: Port 0000 doesn't work
+port = 6789
+
+# TODO: Why is there a delay for styling
+host = gethostbyname(gethostname())
+print(host)
+serverSocket.bind((host, port))
+
+# Bind the socket to server address and server port
+# TODO: How does empty string work for host?
+# serverSocket.bind(("131.229.194.249", port))
+
+# Tell the socket to listen to at most 1 connection at a time
+serverSocket.listen(1)
 
 # -----------
 # Fill in end
@@ -23,7 +39,7 @@ while True:
     # -------------
     # Fill in start
     # -------------
-    connectionSocket, addr = None # TODO: Set up a new connection from the client
+    connectionSocket, addr = serverSocket.accept() # Task: Set up a new connection from the client
     # -----------
     # Fill in end
     # -----------
@@ -33,7 +49,10 @@ while True:
         # -------------
         # Fill in start
         # -------------
-        message = None # TODO: Receive the request message from the client
+        
+        # TODO: When to use connection socket and when to use server socket?
+        message = connectionSocket.recv(1024) # Task: Receive the request message from the client
+
         # -----------
         # Fill in end
         # -----------
@@ -49,7 +68,7 @@ while True:
         # -------------
         # Fill in start
         # -------------
-        outputdata = None # TODO: Store the entire contents of the requested file in a temporary buffer
+        outputdata = f.read() # Task: Store the entire contents of the requested file in a temporary buffer
         # -----------
         # Fill in end
         # -----------
@@ -57,7 +76,12 @@ while True:
         # -------------
         # Fill in start
         # -------------
-            # TODO: Send one HTTP header line into socket
+
+        # Task: Send one HTTP header line into socket
+        # TODO: What exactly is a http header line
+        # Need bytes and UTF-8
+        connectionSocket.send(bytes("HTTP/1.1 200 OK\r\n\r\n","UTF-8"))
+
         # -----------
         # Fill in end
         # -----------
@@ -73,8 +97,11 @@ while True:
         # -------------
         # Fill in start
         # -------------
-            # TODO: Send response message for file not found
+            # Task: Send response message for file not found
             #       Close client socket
+        connectionSocket.send(bytes("HTTP/1.1 404 Not Found\r\n\r\n","UTF-8"))
+        connectionSocket.close()
+
         # -----------
         # Fill in end
         # -----------
