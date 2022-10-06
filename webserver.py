@@ -1,3 +1,5 @@
+# Name: Winnie Zong; Yujun Shen; Sophia Dai
+
 from socket import *
 import sys # In order to terminate the program
 
