@@ -83,6 +83,7 @@ while True:
         # -------------
 
         # There will be a delay for styling to show up
+        # read() instead of readline() to real the whole file at once
         outputdata = f.read() # Task: Store the entire contents of the requested file in a temporary buffer
         
         # -----------
