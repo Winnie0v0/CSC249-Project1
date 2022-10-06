@@ -7,22 +7,31 @@ serverSocket = socket(AF_INET, SOCK_STREAM)
 # Fill in start
 # -------------
 
+# Youtube tutorial on Python Socket: https://www.youtube.com/watch?v=Lbfe3-v7yE0
+# Group member: Sophia Dai, Yujun Shen, Winnie Zong
+
 # Task: Assign a port number
 #       Bind the socket to server address and server port
 #       Tell the socket to listen to at most 1 connection at a time
 
 # Assign a port number
-# TODO: Port 0000 doesn't work
+# Question: Why port 0000 doesn't work
+# Answer: https://unix.stackexchange.com/questions/180492/is-it-possible-to-connect-to-tcp-port-0
+# Asking to bind TCP on port 0 indicates a request to dynamically generate an unused port number
 port = 6789
 
-# TODO: Why is there a delay for styling
-host = gethostbyname(gethostname())
-print(host)
-serverSocket.bind((host, port))
-
 # Bind the socket to server address and server port
-# TODO: How does empty string work for host?
-# serverSocket.bind(("131.229.194.249", port))
+
+# Use localhost:
+# host = gethostbyname(gethostname())
+# print(host)
+# serverSocket.bind((host, port))
+
+# Use "":
+# Question: How does empty string work for host?
+# Answer: https://docs.python.org/3/library/socket.html
+# Simply use 0.0.0.0
+serverSocket.bind(("", port))
 
 # Tell the socket to listen to at most 1 connection at a time
 serverSocket.listen(1)
@@ -39,7 +48,9 @@ while True:
     # -------------
     # Fill in start
     # -------------
+    
     connectionSocket, addr = serverSocket.accept() # Task: Set up a new connection from the client
+   
     # -----------
     # Fill in end
     # -----------
@@ -50,7 +61,9 @@ while True:
         # Fill in start
         # -------------
         
-        # TODO: When to use connection socket and when to use server socket?
+        # Question: When to use connection socket and when to use server socket?
+        # Answer: connectionSocket is defined above 
+        # and here we are trying to read the message it received so we are using connection socket
         message = connectionSocket.recv(1024) # Task: Receive the request message from the client
 
         # -----------
@@ -68,7 +81,10 @@ while True:
         # -------------
         # Fill in start
         # -------------
+
+        # There will be a delay for styling to show up
         outputdata = f.read() # Task: Store the entire contents of the requested file in a temporary buffer
+        
         # -----------
         # Fill in end
         # -----------
@@ -78,7 +94,8 @@ while True:
         # -------------
 
         # Task: Send one HTTP header line into socket
-        # TODO: What exactly is a http header line
+        # Question: What exactly is a http header line
+        # Answer: https://developer.mozilla.org/en-US/docs/Glossary/HTTP_header
         # Need bytes and UTF-8
         connectionSocket.send(bytes("HTTP/1.1 200 OK\r\n\r\n","UTF-8"))
 
@@ -97,8 +114,9 @@ while True:
         # -------------
         # Fill in start
         # -------------
-            # Task: Send response message for file not found
-            #       Close client socket
+
+        # Task: Send response message for file not found
+        #       Close client socket
         connectionSocket.send(bytes("HTTP/1.1 404 Not Found\r\n\r\n","UTF-8"))
         connectionSocket.close()
 
