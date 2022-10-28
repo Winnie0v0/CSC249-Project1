@@ -73,6 +73,7 @@ while True:
         # Extract the path of the requested object from the message
 		# The path is the second part of HTTP header, identified by [1]
         filename = message.split()[1]
+        print(message)
 
         # Because the extracted path of the HTTP request includes 
 		# a character '\', we read the path from the second character
