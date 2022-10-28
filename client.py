@@ -1,36 +1,26 @@
 import socket
 import sys
 
-IP = socket.gethostbyname(socket.gethostname())
-PORT = 5566
+IP = sys.argv[1]
+PORT = int(sys.argv[2])
 ADDR = (IP, PORT)
 SIZE = 1024
 FORMAT = "utf-8"
-DISCONNECT_MSG = "!DISCONNECT"
+
 
 def main():
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     client.connect(ADDR)
     print(f"[CONNECTED] Client connected to server at {IP}:{PORT}")
 
-    msg = "HelloWorld.html"
+    # msg = 'GET /filename HTTP/1.1\r\n\r\n' sys.argv[3]
+    msg = 'GET /'+sys.argv[3] + ' HTTP/1.1\r\n'
+    # sys.argv[3]
     client.send(msg.encode(FORMAT))
 
     while True:
         msg = client.recv(SIZE).decode(FORMAT)
         print(f"[SERVER] {msg}")
-
-    # connected = True
-    # while connected:
-    #     msg = input("> ")
-
-    #     client.send(msg.encode(FORMAT))
-
-    #     if msg == DISCONNECT_MSG:
-    #         connected = False
-    #     else:
-    #         msg = client.recv(SIZE).decode(FORMAT)
-    #         print(f"[SERVER] {msg}")
 
 if __name__ == "__main__":
     main()
