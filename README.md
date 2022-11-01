@@ -27,3 +27,8 @@ Instead of using a browser, write your own HTTP client to test your server. Your
 
 The expected command format to run the client is as follows:
 ```client.py server_host server_port filename```
+
+## Reflection
+To run phase two, please run webserver2 and then connect to server via browser using method in phase1
+
+To run phase three, please first run webserver2 and then run client.py with 0.0.0.0 as host ip, 6789 as port, and HelloWorld.html as filename.

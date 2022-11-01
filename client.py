@@ -13,9 +13,7 @@ def main():
     client.connect(ADDR)
     print(f"[CONNECTED] Client connected to server at {IP}:{PORT}")
 
-    # msg = 'GET /filename HTTP/1.1\r\n\r\n' sys.argv[3]
     msg = 'GET /'+sys.argv[3] + ' HTTP/1.1\r\n'
-    # sys.argv[3]
     client.send(msg.encode(FORMAT))
 
     while True:
