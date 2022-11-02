@@ -1,3 +1,7 @@
+# Group member: Sophia Dai, Yujun Shen, Winnie Zong
+# Citation: https://www.youtube.com/watch?v=NGLeprazvkM
+# From this Youtube tutorial we learned how to run client in a python file
+# and we managed to apply to the context of this assignment
 import socket
 import sys
 

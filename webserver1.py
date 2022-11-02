@@ -1,3 +1,4 @@
+# Group member: Sophia Dai, Yujun Shen, Winnie Zong
 from socket import *
 import sys # In order to terminate the program
 
@@ -7,8 +8,8 @@ serverSocket = socket(AF_INET, SOCK_STREAM)
 # Fill in start
 # -------------
 
-# Youtube tutorial on Python Socket: https://www.youtube.com/watch?v=Lbfe3-v7yE0
-# Group member: Sophia Dai, Yujun Shen, Winnie Zong
+# Citation: https://www.youtube.com/watch?v=Lbfe3-v7yE0
+# Youtube tutorial on python socket
 
 # Task: Assign a port number
 #       Bind the socket to server address and server port
@@ -73,7 +74,6 @@ while True:
         # Extract the path of the requested object from the message
 		# The path is the second part of HTTP header, identified by [1]
         filename = message.split()[1]
-        print(message)
 
         # Because the extracted path of the HTTP request includes 
 		# a character '\', we read the path from the second character
