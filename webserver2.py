@@ -24,6 +24,8 @@ def handle_client(conn, addr):
     # (which prevent the browser from displaying content until the server is down),
     # we set the connection to non-blocking and set up a timeout handler 
     # where the connection would go down after waiting for recv for more than 10 seconds.
+
+    # When connecting through client.py everything works as expected.
     conn.setblocking(0)
     connected = True
     while connected:
