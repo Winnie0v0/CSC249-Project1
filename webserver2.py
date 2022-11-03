@@ -16,14 +16,13 @@ def handle_client(conn, addr):
     print(f"[NEW CONNECTION] {addr} connected.")
     # TCP connection set up
     
-    # Citation: https://stackoverflow.com/questions/2719017/how-to-set-timeout-on-pythons-socket-recv-method
     # According to the report in console, when a tab is open/refreshed, 
     # the browser (Chrome) sends two requests to the server (set up two connections) 
     # with only one of them asking for the correct file.
     # In order to handle infinite wait during recv when given an incorrect request 
     # (which prevent the browser from displaying content until the server is down),
-    # we set the connection to non-blocking and set up a timeout handler 
-    # where the connection would go down after waiting for recv for more than 10 seconds.
+    # we add a try-catch handler to close the connection that has the unwanted request 
+    # and only keep the connection with the correct request.
 
     # conn.setblocking(0)
     connected = True
