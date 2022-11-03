@@ -25,27 +25,30 @@ def handle_client(conn, addr):
     # we set the connection to non-blocking and set up a timeout handler 
     # where the connection would go down after waiting for recv for more than 10 seconds.
 
-    # When connecting through client.py everything works as expected.
-    conn.setblocking(0)
+    # conn.setblocking(0)
     connected = True
     while connected:
-        ready = select.select([conn], [], [], 10)
-        if ready[0]:
+        # ready = select.select([conn], [], [], 10)
+        # if ready[0]:
+
+        # try catch is necessary to deal with this issue
+        # https://stackoverflow.com/questions/4761913/server-socket-receives-2-http-requests-when-i-send-from-chrome-and-receives-one
+        try:
             # Message was received and the key word was retrieved 
             msg = conn.recv(SIZE).decode(FORMAT)
-            print(f"[ORIGINAL MESSAGE] {msg}")
+            # print(f"[ORIGINAL MESSAGE] {msg}")
             filename = msg.split()[1]
             f = open(filename[1:])
-            print(f"[{addr}] {msg}")
+            # print(f"[{addr}] {msg}")
 
             outputdata = f.read()
             # Send the connection message
-            conn.send(bytes("HTTP/1.1 200 OK","UTF-8"))
+            conn.send(bytes("HTTP/1.1 200 OK\r\n\r\n","UTF-8"))
             conn.send(outputdata.encode())
-        else:
-            break
-
-    conn.close()
+        except:
+            conn.send(bytes("HTTP/1.1 404 Not Found\r\n\r\n","UTF-8"))
+            conn.close()
+            return
 
 def main():
     print("[STARTING] Server is starting...")
@@ -55,14 +58,14 @@ def main():
     server.bind(ADDR)
     # Allow server to listen to multiple connections
     server.listen()
-    print(f"[LISTENING] Server is listening on {IP}:{PORT}")
+    print(f"[LISTENING] Server is listening on {IP}:{PORT}\r\n")
 
     while True:
         conn, addr = server.accept()
         # Create a main thread
         thread = threading.Thread(target=handle_client, args=(conn, addr))
         thread.start()
-        print(f"[ACTIVE CONNECTIONS] {threading.active_count() - 1}")
+        print(f"[ACTIVE CONNECTIONS] {threading.active_count() - 1}\r\n")
 
 if __name__ == "__main__":
     main()

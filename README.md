@@ -30,3 +30,7 @@ The expected command format to run the client is as follows:
 
 ## Group member:
 Sophia Dai, Yujun Shen, Winnie Zong
+
+## Note:
+- webserver1.py is for Phase1
+- webserver2.py is for Phase2 and Phase2

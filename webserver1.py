@@ -66,6 +66,7 @@ while True:
         # Answer: connectionSocket is defined above 
         # and here we are trying to read the message it received so we are using connection socket
         message = connectionSocket.recv(1024) # Task: Receive the request message from the client
+        print(message)
 
         # -----------
         # Fill in end
